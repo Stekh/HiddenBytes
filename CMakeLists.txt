@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(HiddenBytes)
+project(HiddenBytes VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
