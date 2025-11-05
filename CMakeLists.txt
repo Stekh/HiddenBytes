@@ -13,8 +13,17 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(HiddenBytes main.cpp)
-target_link_libraries(HiddenBytes
+set(SRC
+        gui/window.cpp
+        gui/window.h
+        gui/about_widget.cpp
+        gui/about_widget.h)
+
+include_directories(gui)
+
+add_executable(HiddenBytes ${SRC} main.cpp)
+
+target_link_libraries(HiddenBytes PRIVATE
         Qt::Core
         Qt::Gui
         Qt::Widgets
