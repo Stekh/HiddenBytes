@@ -3,20 +3,21 @@
 //
 
 #include <QMenuBar>
+#include <QHBoxLayout>
 
 #include "window.h"
-
 #include "about_widget.h"
 
-Window::Window() {
+Window::Window(QWidget *parent) : QMainWindow(parent) {
 	m_about_widget = new AboutWidget(this);
 
 	m_menu = new QMenuBar(this);
 	m_menu->addMenu("Graphics");
 	m_menu->addMenu("Audio");
 	m_menu->addMenu("About");
-
 	setMenuBar(m_menu);
+
+	m_about_widget = new AboutWidget(this);
 	setCentralWidget(m_about_widget);
 	show();
 }

@@ -12,7 +12,7 @@
 class Window final : public QMainWindow {
 	Q_OBJECT
 public:
-	explicit Window();
+	explicit Window(QWidget *parent = nullptr);
 
 private:
 	QMenuBar *m_menu;
