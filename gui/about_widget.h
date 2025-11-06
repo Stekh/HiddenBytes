@@ -7,14 +7,10 @@
 
 #include <QWidget>
 
-class AboutWidget final {
+class AboutWidget final : public QWidget {
+	Q_OBJECT
 public:
 	explicit AboutWidget(QWidget *parent);
-
-	QWidget *getWidget() const { return m_widget; }
-
-private:
-	QWidget* m_widget;
 };
 
 #endif //HIDDENBYTES_ABOUT_WIDGET_H

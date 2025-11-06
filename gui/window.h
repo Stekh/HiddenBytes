@@ -9,14 +9,13 @@
 
 #include "about_widget.h"
 
-class Window final {
+class Window final : public QMainWindow {
+	Q_OBJECT
 public:
 	explicit Window();
 
 private:
-	QMainWindow *m_main_window;
 	QMenuBar *m_menu;
-
 	AboutWidget *m_about_widget;
 };
 
