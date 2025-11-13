@@ -1,2 +1,2 @@
 # HiddenBytes
-An application showcaseing a few select steganography algorithms
+A showcase of chosen steganography algorithms on image and audio files
