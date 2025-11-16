@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QTextEdit>
 
 
 InterfaceWidget::InterfaceWidget(QWidget *parent) :
@@ -59,7 +60,6 @@ void InterfaceWidget::createEncodeGroupBox() {
 	text_input->setPlaceholderText("Enter message to encode");
 	connect(text_input, &QLineEdit::editingFinished, this, [this, text_input, encode_file_label]()-> void {
 		m_encode_text = text_input->text();
-		encode_file_label->setText(m_encode_text);
 	});
 	encode_layout->addWidget(text_input);
 
@@ -74,11 +74,29 @@ void InterfaceWidget::createDecodeGroupBox() {
 	m_decode_group_box = new QGroupBox("Decode", this);
 	QVBoxLayout *decode_layout = new QVBoxLayout(m_decode_group_box);
 
+	QLabel *decode_file_label = new QLabel(m_encode_group_box);
+	decode_file_label->setText(m_decode_file);
+	decode_file_label->setAlignment(Qt::AlignLeft);
+
 	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
-	connect(decode_file_button, &QPushButton::clicked, this, [this]()-> void {
+	decode_file_label->setBuddy(decode_file_button);
+	connect(decode_file_button, &QPushButton::clicked, this, [this, decode_file_label]()-> void {
 		chooseFile(false);
+		decode_file_label->setText(m_decode_file);
 	});
 	decode_layout->addWidget(decode_file_button);
+	decode_layout->addWidget(decode_file_label);
+
+	QTextEdit *text_output = new QTextEdit(m_decode_group_box);
+	text_output->setReadOnly(true);
+	text_output->setPlaceholderText("Decoded text");
+
+	QPushButton *decode_button = new QPushButton("Decode", m_decode_group_box);
+	connect(decode_button, &QPushButton::clicked, this, [this, text_output]()-> void {
+		text_output->setText("Functionality under construction");
+	});
+	decode_layout->addWidget(decode_button);
+	decode_layout->addWidget(text_output);
 
 	decode_layout->addStretch();
 }
