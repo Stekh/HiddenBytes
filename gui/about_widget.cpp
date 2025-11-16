@@ -31,7 +31,7 @@ AboutWidget::AboutWidget(QWidget *parent) :
 	layout->addWidget(desc, 0, Qt::AlignCenter | Qt::AlignTop);
 
 	QLabel *authors = new QLabel(this);
-	authors->setText("<h2>Authors:</h2>\n - <a href='https://github.com/Stekh'>Stekh</a>");
+	authors->setText("<h2>Authors:</h2>\n - <a href='https://github.com/Stekh'>Stekh</a><br> - <a href='https://github.com/inzwl'>inzwl</a>");
 	authors->setAlignment(Qt::AlignCenter);
 	authors->setOpenExternalLinks(true);
 	layout->addWidget(authors, 0, Qt::AlignCenter | Qt::AlignTop);
