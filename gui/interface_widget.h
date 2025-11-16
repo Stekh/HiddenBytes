@@ -20,12 +20,17 @@ private slots:
 	void chooseOutputDirectory();
 
 private:
-	QGroupBox *m_encode_group_box;
+	void createEncodeGroupBox();
+	void createDecodeGroupBox();
+
+	QGroupBox *m_encode_group_box{};
 	QString m_encode_file;
 	QString m_output_directory;
+	QString m_encode_text;
 
-	QGroupBox *m_decode_group_box;
+	QGroupBox *m_decode_group_box{};
 	QString m_decode_file;
+	QString m_decoded_text;
 };
 
 #endif //HIDDENBYTES_INTERFACE_WIDGET_H

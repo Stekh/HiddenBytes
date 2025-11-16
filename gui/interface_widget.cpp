@@ -6,34 +6,81 @@
 
 #include <QFileDialog>
 #include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 
+
 InterfaceWidget::InterfaceWidget(QWidget *parent) :
-	QWidget(parent) {
+	QWidget(parent), m_encode_text(""), m_decoded_text(""), m_output_directory("") {
 	QGridLayout *layout = new QGridLayout(this);
-	setLayout(layout);
+	layout->setColumnStretch(0, 1);
+	layout->setColumnStretch(1, 1);
 
-	m_encode_group_box = new QGroupBox("Encode", this);
-	QVBoxLayout *encode_layout = new QVBoxLayout(m_encode_group_box);
-	m_encode_group_box->setLayout(encode_layout);
-	QPushButton *encode_file_button = new QPushButton("Choose a file to encode in", m_encode_group_box);
-	connect(encode_file_button, &QPushButton::clicked, this, [this]()->void {InterfaceWidget::chooseFile(true);});
-	encode_layout->addWidget(encode_file_button);
-	QPushButton *output_dir_button = new QPushButton("Choose the output directory", m_encode_group_box);
-	connect(output_dir_button, &QPushButton::clicked, this, &InterfaceWidget::chooseOutputDirectory);
-	encode_layout->addWidget(output_dir_button);
+	createEncodeGroupBox();
+	createDecodeGroupBox();
 
-	m_decode_group_box = new QGroupBox("Decode", this);
-	QVBoxLayout *decode_layout = new QVBoxLayout(m_encode_group_box);
-	m_decode_group_box->setLayout(decode_layout);
-	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
-	connect(decode_file_button, &QPushButton::clicked, this, [this]()->void {InterfaceWidget::chooseFile(false);});
-	decode_layout->addWidget(decode_file_button);
-
-	encode_layout->addStretch();
-	decode_layout->addStretch();
 	layout->addWidget(m_encode_group_box, 0, 0);
 	layout->addWidget(m_decode_group_box, 0, 1);
+}
+
+
+void InterfaceWidget::createEncodeGroupBox() {
+	m_encode_group_box = new QGroupBox("Encode", this);
+	QVBoxLayout *encode_layout = new QVBoxLayout(m_encode_group_box);
+
+	QLabel *encode_file_label = new QLabel(m_encode_group_box);
+	encode_file_label->setText(m_encode_file);
+	encode_file_label->setAlignment(Qt::AlignLeft);
+
+	QPushButton *encode_file_button = new QPushButton("Choose a file to encode text in", m_encode_group_box);
+	encode_file_label->setBuddy(encode_file_button);
+	connect(encode_file_button, &QPushButton::clicked, this, [this, encode_file_label]()-> void {
+		chooseFile(true);
+		encode_file_label->setText(m_encode_file);
+	});
+	encode_layout->addWidget(encode_file_button);
+	encode_layout->addWidget(encode_file_label);
+
+	QLabel *output_dir_label = new QLabel(m_encode_group_box);
+	output_dir_label->setText(m_output_directory);
+	output_dir_label->setAlignment(Qt::AlignLeft);
+
+	QPushButton *output_dir_button = new QPushButton("Choose the output directory", m_encode_group_box);
+	output_dir_label->setBuddy(output_dir_button);
+	connect(output_dir_button, &QPushButton::clicked, this, [this, output_dir_label]()-> void {
+		chooseOutputDirectory();
+		output_dir_label->setText(m_output_directory);
+	});
+	encode_layout->addWidget(output_dir_button);
+	encode_layout->addWidget(output_dir_label);
+
+	QLineEdit *text_input = new QLineEdit(m_encode_group_box);
+	text_input->setPlaceholderText("Enter message to encode");
+	connect(text_input, &QLineEdit::editingFinished, this, [this, text_input, encode_file_label]()-> void {
+		m_encode_text = text_input->text();
+		encode_file_label->setText(m_encode_text);
+	});
+	encode_layout->addWidget(text_input);
+
+	QPushButton *encode_button = new QPushButton("Encode", m_encode_group_box);
+	encode_layout->addWidget(encode_button);
+
+	encode_layout->addStretch();
+}
+
+
+void InterfaceWidget::createDecodeGroupBox() {
+	m_decode_group_box = new QGroupBox("Decode", this);
+	QVBoxLayout *decode_layout = new QVBoxLayout(m_decode_group_box);
+
+	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
+	connect(decode_file_button, &QPushButton::clicked, this, [this]()-> void {
+		chooseFile(false);
+	});
+	decode_layout->addWidget(decode_file_button);
+
+	decode_layout->addStretch();
 }
 
 
