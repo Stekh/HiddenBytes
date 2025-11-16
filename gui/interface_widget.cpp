@@ -92,7 +92,7 @@ void InterfaceWidget::createDecodeGroupBox() {
 	text_output->setPlaceholderText("Decoded text");
 
 	QPushButton *decode_button = new QPushButton("Decode", m_decode_group_box);
-	connect(decode_button, &QPushButton::clicked, this, [this, text_output]()-> void {
+	connect(decode_button, &QPushButton::clicked, this, [text_output]()-> void {
 		text_output->setText("Functionality under construction");
 	});
 	decode_layout->addWidget(decode_button);

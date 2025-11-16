@@ -20,7 +20,6 @@ private:
 	QMenuBar *m_main_menu;
 	QMenu *m_graphics_menu;
 	QMenu *m_audio_menu;
-	QMenu *m_about_menu;
 	AboutWidget *m_about_widget;
 	InterfaceWidget *m_interface_widget;
 };
