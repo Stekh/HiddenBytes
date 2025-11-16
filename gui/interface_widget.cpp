@@ -17,19 +17,21 @@ InterfaceWidget::InterfaceWidget(QWidget *parent) :
 	QVBoxLayout *encode_layout = new QVBoxLayout(m_encode_group_box);
 	m_encode_group_box->setLayout(encode_layout);
 	QPushButton *encode_file_button = new QPushButton("Choose a file to encode in", m_encode_group_box);
-	connect(encode_file_button, SIGNAL(clicked()), this, SLOT(&InterfaceWidget::chooseFile(True)));
+	connect(encode_file_button, &QPushButton::clicked, this, [this]()->void {InterfaceWidget::chooseFile(true);});
 	encode_layout->addWidget(encode_file_button);
-	QPushButton *output_dir_button = new QPushButton("Choose a file to encode in", m_encode_group_box);
-	connect(output_dir_button, SIGNAL(clicked()), this, SLOT(&InterfaceWidget::chooseOutputDirectory()));
+	QPushButton *output_dir_button = new QPushButton("Choose the output directory", m_encode_group_box);
+	connect(output_dir_button, &QPushButton::clicked, this, &InterfaceWidget::chooseOutputDirectory);
 	encode_layout->addWidget(output_dir_button);
 
 	m_decode_group_box = new QGroupBox("Decode", this);
 	QVBoxLayout *decode_layout = new QVBoxLayout(m_encode_group_box);
 	m_decode_group_box->setLayout(decode_layout);
-	QPushButton *decode_file_button = new QPushButton("Choose a file to encode in", m_encode_group_box);
-	connect(decode_file_button, SIGNAL(clicked()), this, SLOT(&InterfaceWidget::chooseFile(False)));
-	encode_layout->addWidget(decode_file_button);
+	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
+	connect(decode_file_button, &QPushButton::clicked, this, [this]()->void {InterfaceWidget::chooseFile(false);});
+	decode_layout->addWidget(decode_file_button);
 
+	encode_layout->addStretch();
+	decode_layout->addStretch();
 	layout->addWidget(m_encode_group_box, 0, 0);
 	layout->addWidget(m_decode_group_box, 0, 1);
 }

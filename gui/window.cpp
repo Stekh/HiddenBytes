@@ -29,5 +29,8 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	m_about_widget = new AboutWidget(this);
 	setCentralWidget(m_about_widget);
+
+	m_interface_widget = new InterfaceWidget(this);
+	setCentralWidget(m_interface_widget);
 	show();
 }

@@ -9,6 +9,7 @@
 #include <QMenu>
 
 #include "about_widget.h"
+#include "interface_widget.h"
 
 class Window final : public QMainWindow {
 	Q_OBJECT
@@ -21,6 +22,7 @@ private:
 	QMenu *m_audio_menu;
 	QMenu *m_about_menu;
 	AboutWidget *m_about_widget;
+	InterfaceWidget *m_interface_widget;
 };
 
 #endif //HIDDENBYTES_WINDOW_H
