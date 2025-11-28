@@ -19,7 +19,10 @@ set(SRC
         gui/about_widget.cpp
         gui/about_widget.h
         gui/interface_widget.cpp
-        gui/interface_widget.h)
+        gui/interface_widget.h
+        
+        algs/graphics_lsb.cpp
+        algs/graphics_lsb.h)
 
 include_directories(gui)
 

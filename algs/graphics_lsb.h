@@ -1,0 +1,8 @@
+//
+// Created by Stek-l on 28/11/2025.
+//
+
+#ifndef HIDDENBYTES_GRAPHICS_LSB_H
+#define HIDDENBYTES_GRAPHICS_LSB_H
+
+#endif // HIDDENBYTES_GRAPHICS_LSB_H
