@@ -59,6 +59,7 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	setCentralWidget(m_about_widget);
 	centralWidget()->setParent(nullptr);
+	m_interface_widget->setEncodeFunction(&gr::lsb_encode);
 	setCentralWidget(m_interface_widget);
 	setMenuBar(m_main_menu);
 
