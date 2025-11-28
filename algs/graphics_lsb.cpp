@@ -43,8 +43,8 @@ namespace gr {
 				for (size_t b = 0; b < 4; b++) {
 					if ((data[offset+b] & (1 << 1)) ^ (msg[msg_iter] & (1 << (b + 4*bit_iter)))) {
 						data[offset] ^= 1 << 1;
-						bit_iter++;
 					}
+					bit_iter++;
 				}
 			}
 			if (stop) {

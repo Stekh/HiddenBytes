@@ -24,11 +24,7 @@ private:
 	void createEncodeGroupBox();
 	void createDecodeGroupBox();
 
-	void encode();
 	QImage (*m_encode_function)(QString, QString);
-
-	void decode();
-
 	QGroupBox *m_encode_group_box;
 	QString m_encode_file;
 	QString m_output_directory;
