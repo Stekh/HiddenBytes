@@ -13,7 +13,7 @@
 
 
 InterfaceWidget::InterfaceWidget(QWidget *parent) :
-	QWidget(parent), m_encode_text(""), m_decoded_text(""), m_output_directory("") {
+	QWidget(parent), m_encode_text(""), m_decoded_text(""), m_output_directory(""), m_is_audio(false) {
 	QGridLayout *layout = new QGridLayout(this);
 	layout->setColumnStretch(0, 1);
 	layout->setColumnStretch(1, 1);
@@ -37,7 +37,7 @@ void InterfaceWidget::createEncodeGroupBox() {
 	QPushButton *encode_file_button = new QPushButton("Choose a file to encode text in", m_encode_group_box);
 	encode_file_label->setBuddy(encode_file_button);
 	connect(encode_file_button, &QPushButton::clicked, this, [this, encode_file_label]() -> void {
-		chooseFile(true);
+		chooseFile(true, m_is_audio);
 		encode_file_label->setText(m_encode_file);
 	});
 	encode_layout->addWidget(encode_file_button);
@@ -86,7 +86,7 @@ void InterfaceWidget::createDecodeGroupBox() {
 	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
 	decode_file_label->setBuddy(decode_file_button);
 	connect(decode_file_button, &QPushButton::clicked, this, [this, decode_file_label]() -> void {
-		chooseFile(false);
+		chooseFile(false, m_is_audio);
 		decode_file_label->setText(m_decode_file);
 	});
 	decode_layout->addWidget(decode_file_button);
@@ -109,12 +109,12 @@ void InterfaceWidget::createDecodeGroupBox() {
 }
 
 
-void InterfaceWidget::chooseFile(const bool encode) {
+void InterfaceWidget::chooseFile(const bool encode, const bool audio) {
 	QFileDialog file_dialog;
 	file_dialog.setFileMode(QFileDialog::ExistingFile);
 	file_dialog.setWindowTitle(encode ? "Choose a file to encode" : "Choose a file to decode");
 	file_dialog.setDirectory(QDir::homePath());
-	file_dialog.setNameFilter("Image files (*.jpg *.png)");
+	file_dialog.setNameFilter(audio? "Audio files (*.wav)" : "Image files (*.jpg *.png)");
 
 	if (file_dialog.exec() == QDialog::Accepted) {
 		encode ? m_encode_file = file_dialog.selectedFiles()[0] : m_decode_file = file_dialog.selectedFiles()[0];

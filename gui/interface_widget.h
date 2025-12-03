@@ -17,8 +17,10 @@ public:
 	void setEncodeFunction(QImage (*f)(QString, QString)) { m_encode_function = f; };
 	void setDecodeFunction(QString (*f)(QString)) { m_decode_function = f; };
 
+	bool m_is_audio;
+
 private slots:
-	void chooseFile(bool encode);
+	void chooseFile(bool encode, bool audio);
 	void chooseOutputDirectory();
 
 private:

@@ -19,6 +19,7 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	connect(graphics_LSB_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
+		m_interface_widget->m_is_audio = false;
 		setCentralWidget(m_interface_widget);
 	});
 	connect(graphics_alg2_action, &QAction::triggered, this, [this]() -> void {
