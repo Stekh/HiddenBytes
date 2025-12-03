@@ -99,6 +99,7 @@ void InterfaceWidget::createDecodeGroupBox() {
 	QPushButton *decode_button = new QPushButton("Decode", m_decode_group_box);
 	connect(decode_button, &QPushButton::clicked, this, [this]() -> void {
 		m_decoded_text = m_decode_function(m_decode_file);
+		text_output->setText(m_decoded_text);
 	});
 	decode_layout->addWidget(decode_button);
 	decode_layout->addWidget(text_output);
