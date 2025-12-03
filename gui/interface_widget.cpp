@@ -36,7 +36,7 @@ void InterfaceWidget::createEncodeGroupBox() {
 
 	QPushButton *encode_file_button = new QPushButton("Choose a file to encode text in", m_encode_group_box);
 	encode_file_label->setBuddy(encode_file_button);
-	connect(encode_file_button, &QPushButton::clicked, this, [this, encode_file_label]()-> void {
+	connect(encode_file_button, &QPushButton::clicked, this, [this, encode_file_label]() -> void {
 		chooseFile(true);
 		encode_file_label->setText(m_encode_file);
 	});
@@ -49,7 +49,7 @@ void InterfaceWidget::createEncodeGroupBox() {
 
 	QPushButton *output_dir_button = new QPushButton("Choose the output directory", m_encode_group_box);
 	output_dir_label->setBuddy(output_dir_button);
-	connect(output_dir_button, &QPushButton::clicked, this, [this, output_dir_label]()-> void {
+	connect(output_dir_button, &QPushButton::clicked, this, [this, output_dir_label]() -> void {
 		chooseOutputDirectory();
 		output_dir_label->setText(m_output_directory);
 	});
@@ -58,13 +58,18 @@ void InterfaceWidget::createEncodeGroupBox() {
 
 	QLineEdit *text_input = new QLineEdit(m_encode_group_box);
 	text_input->setPlaceholderText("Enter message to encode");
-	connect(text_input, &QLineEdit::editingFinished, this, [this, text_input, encode_file_label]()-> void {
-		m_encode_text = text_input->text();
-	});
+	connect(text_input, &QLineEdit::editingFinished, this,
+			[this, text_input, encode_file_label]() -> void { m_encode_text = text_input->text(); });
 	encode_layout->addWidget(text_input);
 
 	QPushButton *encode_button = new QPushButton("Encode", m_encode_group_box);
 	encode_layout->addWidget(encode_button);
+	connect(encode_button, &QPushButton::clicked, this, [this]() -> void {
+		m_encoded_image = m_encode_function(m_encode_file, m_encode_text);
+		if (!m_encoded_image.save(m_output_directory + "/res.png")) {
+			throw std::runtime_error("Failed to save image");
+		}
+	});
 
 	encode_layout->addStretch();
 }
@@ -80,7 +85,7 @@ void InterfaceWidget::createDecodeGroupBox() {
 
 	QPushButton *decode_file_button = new QPushButton("Choose a file to decode", m_encode_group_box);
 	decode_file_label->setBuddy(decode_file_button);
-	connect(decode_file_button, &QPushButton::clicked, this, [this, decode_file_label]()-> void {
+	connect(decode_file_button, &QPushButton::clicked, this, [this, decode_file_label]() -> void {
 		chooseFile(false);
 		decode_file_label->setText(m_decode_file);
 	});
@@ -92,9 +97,8 @@ void InterfaceWidget::createDecodeGroupBox() {
 	text_output->setPlaceholderText("Decoded text");
 
 	QPushButton *decode_button = new QPushButton("Decode", m_decode_group_box);
-	connect(decode_button, &QPushButton::clicked, this, [text_output]()-> void {
-		text_output->setText("Functionality under construction");
-	});
+	connect(decode_button, &QPushButton::clicked, this,
+			[text_output]() -> void { text_output->setText("Functionality under construction"); });
 	decode_layout->addWidget(decode_button);
 	decode_layout->addWidget(text_output);
 

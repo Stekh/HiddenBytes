@@ -14,6 +14,7 @@ class InterfaceWidget final : public QWidget {
 
 public:
 	explicit InterfaceWidget(QWidget *parent);
+	void setEncodeFunction(QImage (*f)(QString, QString)) { m_encode_function = f; };
 
 private slots:
 	void chooseFile(bool encode);
@@ -23,14 +24,16 @@ private:
 	void createEncodeGroupBox();
 	void createDecodeGroupBox();
 
+	QImage (*m_encode_function)(QString, QString);
 	QGroupBox *m_encode_group_box;
 	QString m_encode_file;
 	QString m_output_directory;
 	QString m_encode_text;
+	QImage m_encoded_image;
 
 	QGroupBox *m_decode_group_box;
 	QString m_decode_file;
 	QString m_decoded_text;
 };
 
-#endif //HIDDENBYTES_INTERFACE_WIDGET_H
+#endif // HIDDENBYTES_INTERFACE_WIDGET_H
