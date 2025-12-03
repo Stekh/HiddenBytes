@@ -4,7 +4,6 @@
 
 #include <QMenuBar>
 
-#include "../algs/graphics_lsb.h"
 #include "window.h"
 
 Window::Window(QWidget *parent) : QMainWindow(parent) {
@@ -20,7 +19,6 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	connect(graphics_LSB_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
-		m_interface_widget->setEncodeFunction(&gr::lsb_encode);
 		setCentralWidget(m_interface_widget);
 	});
 	connect(graphics_alg2_action, &QAction::triggered, this, [this]() -> void {
@@ -59,7 +57,6 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	setCentralWidget(m_about_widget);
 	centralWidget()->setParent(nullptr);
-	m_interface_widget->setEncodeFunction(&gr::lsb_encode);
 	setCentralWidget(m_interface_widget);
 	setMenuBar(m_main_menu);
 

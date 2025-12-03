@@ -101,6 +101,9 @@ void InterfaceWidget::createDecodeGroupBox() {
 			[text_output]() -> void { text_output->setText("Functionality under construction"); });
 	decode_layout->addWidget(decode_button);
 	decode_layout->addWidget(text_output);
+	connect(decode_button, &QPushButton::clicked, this, [this]() -> void {
+		m_decoded_text = m_decode_function(m_decode_file);
+	});
 
 	decode_layout->addStretch();
 }
