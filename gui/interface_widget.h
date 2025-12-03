@@ -15,9 +15,12 @@ class InterfaceWidget final : public QWidget {
 public:
 	explicit InterfaceWidget(QWidget *parent);
 	void setEncodeFunction(QImage (*f)(QString, QString)) { m_encode_function = f; };
+	void setDecodeFunction(QString (*f)(QString)) { m_decode_function = f; };
+
+	bool m_is_audio;
 
 private slots:
-	void chooseFile(bool encode);
+	void chooseFile(bool encode, bool audio);
 	void chooseOutputDirectory();
 
 private:
@@ -31,6 +34,7 @@ private:
 	QString m_encode_text;
 	QImage m_encoded_image;
 
+	QString (*m_decode_function)(QString);
 	QGroupBox *m_decode_group_box;
 	QString m_decode_file;
 	QString m_decoded_text;
