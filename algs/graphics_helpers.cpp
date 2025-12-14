@@ -5,12 +5,7 @@
 #include "graphics_helpers.h"
 
 namespace gr {
-	QImage load_image(QString filepath){
-		QImage image;
-		if (!image.load(filepath)) {
-			throw std::runtime_error("Couldn't open image");
-		}
-
-		return image;
+	ImageMeta verify_image(const std::ifstream &file) {
+		return {false, 0, 0, std::span<RGBPixel>{}};
 	}
-}
+} // namespace gr

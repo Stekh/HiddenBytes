@@ -113,7 +113,7 @@ void InterfaceWidget::chooseFile(const bool encode, const bool audio) {
 	file_dialog.setFileMode(QFileDialog::ExistingFile);
 	file_dialog.setWindowTitle(encode ? "Choose a file to encode" : "Choose a file to decode");
 	file_dialog.setDirectory(QDir::homePath());
-	file_dialog.setNameFilter(audio? "Audio files (*.wav)" : "Image files (*.jpg *.png)");
+	file_dialog.setNameFilter(audio? "Audio files (*.wav)" : "Image files (*.bmp)");
 
 	if (file_dialog.exec() == QDialog::Accepted) {
 		encode ? m_encode_file = file_dialog.selectedFiles()[0] : m_decode_file = file_dialog.selectedFiles()[0];
