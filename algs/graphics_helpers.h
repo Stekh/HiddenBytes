@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include <fstream>
-#include <span>
+#include <vector>
 
 namespace gr {
 
@@ -39,9 +39,9 @@ namespace gr {
 
 	// Define a pixel structure for RGB
 	struct RGBPixel {
-		uint8_t *b;
-		uint8_t *g;
-		uint8_t *r;
+		uint8_t b;
+		uint8_t g;
+		uint8_t r;
 	};
 
 #pragma pack(pop) // Restore previous packing alignment
@@ -50,10 +50,10 @@ namespace gr {
 		bool is_valid;
 		int32_t width;
 		int32_t height;
-		std::span<RGBPixel> pixels;
+		std::vector<RGBPixel> pixels;
 	};
 
-	ImageMeta verify_image(const std::ifstream &file);
+	ImageMeta verify_image(std::ifstream &file);
 
 } // namespace gr
 
