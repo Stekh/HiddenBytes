@@ -35,6 +35,6 @@ namespace gr {
 			}
 		}
 
-		return {false, 0, 0, std::move(pixels)};
+		return {true, dib_header.width, dib_header.height, std::move(pixels)};
 	}
 } // namespace gr
