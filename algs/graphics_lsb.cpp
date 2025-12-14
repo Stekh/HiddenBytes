@@ -2,6 +2,7 @@
 // Created by Stek-l on 28/11/2025.
 //
 
+#include <bitset>
 #include <cmath>
 
 #include "graphics_helpers.h"
@@ -12,7 +13,28 @@ namespace gr {
 	bool lsb_encode(QString path, QString message) {
 		std::ifstream file(path.toStdString(), std::ios::binary);
 
-		return false;
+		ImageMeta img_meta = verify_image(file);
+		if (!img_meta.is_valid) {
+			return false;
+		}
+
+		// convert message to binary
+		std::string msg = message.toStdString();
+		std::string bin_msg;
+		for (size_t i = 0; i < msg.length(); i++) {
+			bin_msg += std::bitset<8>(msg[i]).to_string();
+		}
+		// add the null terminator
+		bin_msg += "00000000";
+
+		// main loop over the image
+		for (size_t y = 0; y < img_meta.height; y++) {
+			for (size_t x = 0; x < img_meta.width; x++) {
+				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
+			}
+		}
+
+		return true;
 	}
 
 	QString lsb_decode(QString path) {
@@ -26,6 +48,7 @@ namespace gr {
 		size_t null_term_cnt = 0;
 		std::string bin_res;
 
+		// main loop over the image
 		for (size_t y = 0; y < img_meta.height; y++) {
 			for (size_t x = 0; x < img_meta.width; x++) {
 				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
