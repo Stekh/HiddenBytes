@@ -46,6 +46,7 @@ namespace gr {
 		}
 
 		size_t null_term_cnt = 0;
+		size_t byte_cnt = 0;
 		std::string bin_res;
 
 		// main loop over the image
@@ -54,39 +55,50 @@ namespace gr {
 				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
 				char bit = (pixel.r & 1) + '0';
 				bin_res += bit;
-				if (bit == '0' && ++null_term_cnt == 8) {
-					//reached null terminator
-					goto finish_reading;
-				} else if (bit == '1') null_term_cnt = 0;
+				byte_cnt++;
+				if (bit == '0') {
+					null_term_cnt++;
+					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+						// reached null terminator
+						goto finish_reading;
+					}
+				} else if (bit == '1')
+					null_term_cnt = 0;
 
 				bit = (pixel.g & 1) + '0';
 				bin_res += bit;
-				if (bit == '0' && ++null_term_cnt == 8) {
-					//reached null terminator
-					goto finish_reading;
-				} else if (bit == '1') null_term_cnt = 0;
+				byte_cnt++;
+				if (bit == '0') {
+					null_term_cnt++;
+					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+						// reached null terminator
+						goto finish_reading;
+					}
+				} else if (bit == '1')
+					null_term_cnt = 0;
 
 				bit = (pixel.b & 1) + '0';
 				bin_res += bit;
-				if (bit == '0' && ++null_term_cnt == 8) {
-					//reached null terminator
-					goto finish_reading;
-				} else if (bit == '1') null_term_cnt = 0;
+				byte_cnt++;
+				if (bit == '0') {
+					null_term_cnt++;
+					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+						// reached null terminator
+						goto finish_reading;
+					}
+				} else if (bit == '1')
+					null_term_cnt = 0;
 			}
 		}
-		finish_reading:
+	finish_reading:
 
 		QString res;
-		if (bin_res.length() % 8 != 0) {
-			res = "Invalid message; either no message was encoded or it got corrupted";
-		} else {
-			for (size_t i = 0; i < bin_res.length(); i += 8) {
-				uint8_t buf = 0;
-				for (int16_t b = 7; b >= 0; b--) {
-					buf += std::pow(2, 8 - (b + 1)) * (bin_res[static_cast<int16_t>(i) + b] - '0');
-				}
-				res += static_cast<char>(buf);
+		for (size_t i = 0; i < bin_res.length(); i += 8) {
+			uint8_t buf = 0;
+			for (int16_t b = 7; b >= 0; b--) {
+				buf += std::pow(2, 8 - (b + 1)) * (bin_res[static_cast<int16_t>(i) + b] - '0');
 			}
+			res += static_cast<char>(buf);
 		}
 
 		return res;
