@@ -2,11 +2,8 @@
 // Created by Stek-l on 28/11/2025.
 //
 
-#include <bitset>
-#include <cmath>
-
-#include "graphics_helpers.h"
 #include "graphics_lsb.h"
+#include "graphics_helpers.h"
 
 namespace gr {
 
@@ -20,12 +17,7 @@ namespace gr {
 
 		// convert message to binary
 		std::string msg = message.toStdString();
-		std::string bin_msg;
-		for (size_t i = 0; i < msg.length(); i++) {
-			bin_msg += std::bitset<8>(msg[i]).to_string();
-		}
-		// add the null terminator
-		bin_msg += "00000000";
+		std::string bin_msg = str2bin(msg);
 
 		// main loop over the image
 		for (size_t y = 0; y < img_meta.height; y++) {
@@ -92,14 +84,7 @@ namespace gr {
 		}
 	finish_reading:
 
-		QString res;
-		for (size_t i = 0; i < bin_res.length(); i += 8) {
-			uint8_t buf = 0;
-			for (int16_t b = 7; b >= 0; b--) {
-				buf += std::pow(2, 8 - (b + 1)) * (bin_res[static_cast<int16_t>(i) + b] - '0');
-			}
-			res += static_cast<char>(buf);
-		}
+		QString res = bin2str(bin_res);
 
 		return res;
 	}

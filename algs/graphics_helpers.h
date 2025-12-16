@@ -55,6 +55,10 @@ namespace gr {
 
 	ImageMeta verify_image(std::ifstream &file);
 
+	QString bin2str(const std::string &bin_str);
+
+	std::string str2bin(const std::string &str);
+
 } // namespace gr
 
 #endif // HIDDENBYTES_GRAPHICS_HELPERS_H
