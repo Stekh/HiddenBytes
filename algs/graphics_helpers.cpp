@@ -61,5 +61,7 @@ namespace gr {
 		}
 		// add the null terminator
 		bin_str += "00000000";
+
+		return bin_str;
 	}
 } // namespace gr

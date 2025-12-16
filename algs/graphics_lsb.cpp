@@ -18,13 +18,38 @@ namespace gr {
 		// convert message to binary
 		std::string msg = message.toStdString();
 		std::string bin_msg = str2bin(msg);
+		size_t bin_cnt = 0;
 
 		// main loop over the image
 		for (size_t y = 0; y < img_meta.height; y++) {
 			for (size_t x = 0; x < img_meta.width; x++) {
 				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
+				if (bin_cnt == bin_msg.length()) {
+					goto finish_writing;
+				}
+				if (pixel.r & 1 ^ bin_msg[bin_cnt] - '0') {
+					pixel.r ^= 1; // flip LSB
+				}
+				bin_cnt++;
+
+				if (bin_cnt == bin_msg.length()) {
+					goto finish_writing;
+				}
+				if (pixel.g & 1 ^ bin_msg[bin_cnt] - '0') {
+					pixel.g ^= 1; // flip LSB
+				}
+				bin_cnt++;
+
+				if (bin_cnt == bin_msg.length()) {
+					goto finish_writing;
+				}
+				if (pixel.b & 1 ^ bin_msg[bin_cnt] - '0') {
+					pixel.b ^= 1; // flip LSB
+				}
+				bin_cnt++;
 			}
 		}
+	finish_writing:
 
 		return true;
 	}
