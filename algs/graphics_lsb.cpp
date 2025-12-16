@@ -51,6 +51,7 @@ namespace gr {
 		}
 	finish_writing:
 
+		file.close();
 		return true;
 	}
 
@@ -111,6 +112,7 @@ namespace gr {
 
 		QString res = bin2str(bin_res);
 
+		file.close();
 		return res;
 	}
 
