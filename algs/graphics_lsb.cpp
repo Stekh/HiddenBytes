@@ -7,7 +7,7 @@
 
 namespace gr {
 
-	bool lsb_encode(QString path, QString message) {
+	bool lsb_encode(const QString& path, const QString& message, const QString& output_dir) {
 		std::ifstream file(path.toStdString(), std::ios::binary);
 
 		ImageMeta img_meta = verify_image(file);
@@ -21,9 +21,9 @@ namespace gr {
 		size_t bin_cnt = 0;
 
 		// main loop over the image
-		for (size_t y = 0; y < img_meta.height; y++) {
-			for (size_t x = 0; x < img_meta.width; x++) {
-				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
+		for (size_t y = 0; y < img_meta.dib_header.height; y++) {
+			for (size_t x = 0; x < img_meta.dib_header.width; x++) {
+				RGBPixel &pixel = img_meta.pixels[y * img_meta.dib_header.width + x];
 				if (bin_cnt == bin_msg.length()) {
 					goto finish_writing;
 				}
@@ -51,11 +51,33 @@ namespace gr {
 		}
 	finish_writing:
 
+		std::ofstream res_file (output_dir.toStdString() + "/res.bmp");
+		if (!res_file.is_open()) {
+			return false;
+		}
+
+		res_file.write(reinterpret_cast<char *>(&img_meta.bmp_header), sizeof(img_meta.bmp_header));
+		res_file.write(reinterpret_cast<char *>(&img_meta.dib_header), sizeof(img_meta.dib_header));
+		res_file.seekp(img_meta.bmp_header.dataOffset, std::ios::beg);
+
+		// for (int32_t y = dib_header.height - 1; y >= 0; y--) {
+		// 	for (int32_t x = 0; x < dib_header.width; x++) {
+		// 		file.read(reinterpret_cast<char *>(&pixels[y * dib_header.width + x]), sizeof(RGBPixel));
+		// 	}
+		// }
+
+		for (int32_t y = img_meta.dib_header.height - 1; y >= 0; y--) {
+			for (int32_t x = 0; x < img_meta.dib_header.width; x++) {
+				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]), sizeof(RGBPixel));
+			}
+		}
+
 		file.close();
+		res_file.close();
 		return true;
 	}
 
-	QString lsb_decode(QString path) {
+	QString lsb_decode(const QString& path) {
 		std::ifstream file(path.toStdString(), std::ios::binary);
 
 		ImageMeta img_meta = verify_image(file);
@@ -68,9 +90,9 @@ namespace gr {
 		std::string bin_res;
 
 		// main loop over the image
-		for (size_t y = 0; y < img_meta.height; y++) {
-			for (size_t x = 0; x < img_meta.width; x++) {
-				RGBPixel &pixel = img_meta.pixels[y * img_meta.width + x];
+		for (size_t y = 0; y < img_meta.dib_header.height; y++) {
+			for (size_t x = 0; x < img_meta.dib_header.width; x++) {
+				RGBPixel &pixel = img_meta.pixels[y * img_meta.dib_header.width + x];
 				char bit = (pixel.r & 1) + '0';
 				bin_res += bit;
 				byte_cnt++;

@@ -65,7 +65,7 @@ void InterfaceWidget::createEncodeGroupBox() {
 	QPushButton *encode_button = new QPushButton("Encode", m_encode_group_box);
 	encode_layout->addWidget(encode_button);
 	connect(encode_button, &QPushButton::clicked, this, [this]() -> void {
-		bool encoded = m_encode_function(m_encode_file, m_encode_text);
+		bool encoded = m_encode_function(m_encode_file, m_encode_text, m_output_directory);
 		if (!encoded) {
 			throw std::runtime_error("Failed to save image");
 		}

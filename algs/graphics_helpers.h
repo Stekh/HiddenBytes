@@ -48,8 +48,8 @@ namespace gr {
 
 	struct ImageMeta {
 		bool is_valid;
-		int32_t width;
-		int32_t height;
+		BMPHeader bmp_header;
+		DIBHeader dib_header;
 		std::vector<RGBPixel> pixels;
 	};
 

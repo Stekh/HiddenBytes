@@ -10,7 +10,7 @@
 namespace gr {
 	ImageMeta verify_image(std::ifstream &file) {
 		if (!file.is_open()) {
-			return {false, 0, 0, std::vector<RGBPixel>{}};
+			return {false, {}, {}, std::vector<RGBPixel>{}};
 		}
 
 		BMPHeader bmp_header;
@@ -19,13 +19,13 @@ namespace gr {
 		// read the bmp header
 		file.read(reinterpret_cast<char *>(&bmp_header), sizeof(bmp_header));
 		if (bmp_header.header[0] != 'B' || bmp_header.header[1] != 'M') {
-			return {false, 0, 0, std::vector<RGBPixel>{}};
+			return {false, {}, {}, std::vector<RGBPixel>{}};
 		}
 
 		// read the dib header
 		file.read(reinterpret_cast<char *>(&dib_header), sizeof(dib_header));
 		if (dib_header.bitsPerPixel != 24) {
-			return {false, 0, 0, std::vector<RGBPixel>{}};
+			return {false, {}, {}, std::vector<RGBPixel>{}};
 		}
 
 		file.seekg(bmp_header.dataOffset, std::ios::beg);
@@ -38,7 +38,7 @@ namespace gr {
 			}
 		}
 
-		return {true, dib_header.width, dib_header.height, std::move(pixels)};
+		return {true, bmp_header, dib_header, std::move(pixels)};
 	}
 
 	QString bin2str(const std::string &bin_str) {

@@ -8,9 +8,9 @@
 #include <QImage>
 
 namespace gr {
-	bool lsb_encode(QString path, QString message);
+	bool lsb_encode(const QString& path, const QString& message, const QString& output_dir);
 
-	QString lsb_decode(QString path);
+	QString lsb_decode(const QString& path);
 
 } // namespace gr
 
