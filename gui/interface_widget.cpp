@@ -65,8 +65,8 @@ void InterfaceWidget::createEncodeGroupBox() {
 	QPushButton *encode_button = new QPushButton("Encode", m_encode_group_box);
 	encode_layout->addWidget(encode_button);
 	connect(encode_button, &QPushButton::clicked, this, [this]() -> void {
-		m_encoded_image = m_encode_function(m_encode_file, m_encode_text);
-		if (!m_encoded_image.save(m_output_directory + "/res.png")) {
+		bool encoded = m_encode_function(m_encode_file, m_encode_text, m_output_directory);
+		if (!encoded) {
 			throw std::runtime_error("Failed to save image");
 		}
 	});
@@ -97,7 +97,7 @@ void InterfaceWidget::createDecodeGroupBox() {
 	text_output->setPlaceholderText("Decoded text");
 
 	QPushButton *decode_button = new QPushButton("Decode", m_decode_group_box);
-	connect(decode_button, &QPushButton::clicked, this, [this]() -> void {
+	connect(decode_button, &QPushButton::clicked, this, [this, text_output]() -> void {
 		m_decoded_text = m_decode_function(m_decode_file);
 		text_output->setText(m_decoded_text);
 	});
@@ -113,7 +113,7 @@ void InterfaceWidget::chooseFile(const bool encode, const bool audio) {
 	file_dialog.setFileMode(QFileDialog::ExistingFile);
 	file_dialog.setWindowTitle(encode ? "Choose a file to encode" : "Choose a file to decode");
 	file_dialog.setDirectory(QDir::homePath());
-	file_dialog.setNameFilter(audio? "Audio files (*.wav)" : "Image files (*.jpg *.png)");
+	file_dialog.setNameFilter(audio? "Audio files (*.wav)" : "Image files (*.bmp)");
 
 	if (file_dialog.exec() == QDialog::Accepted) {
 		encode ? m_encode_file = file_dialog.selectedFiles()[0] : m_decode_file = file_dialog.selectedFiles()[0];
