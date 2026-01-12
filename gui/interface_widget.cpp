@@ -13,7 +13,7 @@
 
 
 InterfaceWidget::InterfaceWidget(QWidget *parent) :
-	QWidget(parent), m_encode_text(""), m_decoded_text(""), m_output_directory("") {
+	QWidget(parent), m_encode_text(""), m_decoded_text(""), m_output_directory(""), m_is_audio(false) {
 	QGridLayout *layout = new QGridLayout(this);
 	layout->setColumnStretch(0, 1);
 	layout->setColumnStretch(1, 1);

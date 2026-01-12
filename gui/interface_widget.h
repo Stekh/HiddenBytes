@@ -32,6 +32,7 @@ private:
 	QString m_encode_file;
 	QString m_output_directory;
 	QString m_encode_text;
+	QImage m_encoded_image;
 
 	QString (*m_decode_function)(const QString&);
 	QGroupBox *m_decode_group_box;
