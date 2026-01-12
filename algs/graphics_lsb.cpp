@@ -60,12 +60,6 @@ namespace gr {
 		res_file.write(reinterpret_cast<char *>(&img_meta.dib_header), sizeof(img_meta.dib_header));
 		res_file.seekp(img_meta.bmp_header.dataOffset, std::ios::beg);
 
-		// for (int32_t y = dib_header.height - 1; y >= 0; y--) {
-		// 	for (int32_t x = 0; x < dib_header.width; x++) {
-		// 		file.read(reinterpret_cast<char *>(&pixels[y * dib_header.width + x]), sizeof(RGBPixel));
-		// 	}
-		// }
-
 		for (int32_t y = img_meta.dib_header.height - 1; y >= 0; y--) {
 			for (int32_t x = 0; x < img_meta.dib_header.width; x++) {
 				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]), sizeof(RGBPixel));
@@ -98,7 +92,7 @@ namespace gr {
 				byte_cnt++;
 				if (bit == '0') {
 					null_term_cnt++;
-					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+					if (byte_cnt % 8 == 0 && ++null_term_cnt >= 8) {
 						// reached null terminator
 						goto finish_reading;
 					}
@@ -110,7 +104,7 @@ namespace gr {
 				byte_cnt++;
 				if (bit == '0') {
 					null_term_cnt++;
-					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+					if (byte_cnt % 8 == 0 && ++null_term_cnt >= 8) {
 						// reached null terminator
 						goto finish_reading;
 					}
@@ -122,7 +116,7 @@ namespace gr {
 				byte_cnt++;
 				if (bit == '0') {
 					null_term_cnt++;
-					if (byte_cnt == 7 && ++null_term_cnt == 8) {
+					if (byte_cnt % 8 == 0 && ++null_term_cnt >= 8) {
 						// reached null terminator
 						goto finish_reading;
 					}
