@@ -129,7 +129,7 @@ namespace gr {
 		QString res = bin2str(bin_res);
 
 		file.close();
-		return res;
+		return res.removeLast();
 	}
 
 } // namespace gr
