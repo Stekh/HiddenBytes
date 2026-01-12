@@ -14,8 +14,8 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	m_graphics_menu = new QMenu("Graphics", m_main_menu);
 	const QAction *graphics_LSB_action = m_graphics_menu->addAction("LSB");
-	const QAction *graphics_alg2_action = m_graphics_menu->addAction("Alg 2");
-	const QAction *graphics_alg3_action = m_graphics_menu->addAction("Alg 3");
+	// const QAction *graphics_alg2_action = m_graphics_menu->addAction("Alg 2");
+	// const QAction *graphics_alg3_action = m_graphics_menu->addAction("Alg 3");
 	m_main_menu->addMenu(m_graphics_menu);
 
 	connect(graphics_LSB_action, &QAction::triggered, this, [this]() -> void {
@@ -25,14 +25,16 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 		m_interface_widget->m_is_audio = false;
 		setCentralWidget(m_interface_widget);
 	});
-	connect(graphics_alg2_action, &QAction::triggered, this, [this]() -> void {
-		centralWidget()->setParent(nullptr);
-		setCentralWidget(m_interface_widget);
-	});
-	connect(graphics_alg3_action, &QAction::triggered, this, [this]() -> void {
-		centralWidget()->setParent(nullptr);
-		setCentralWidget(m_interface_widget);
-	});
+	// connect(graphics_alg2_action, &QAction::triggered, this, [this]() -> void {
+	// 	centralWidget()->setParent(nullptr);
+	// 	m_interface_widget->m_is_audio = false;
+	//  	setCentralWidget(m_interface_widget);
+	// });
+	// connect(graphics_alg3_action, &QAction::triggered, this, [this]() -> void {
+	// 	centralWidget()->setParent(nullptr);
+	// 	m_interface_widget->m_is_audio = false;
+	// 	setCentralWidget(m_interface_widget);
+	// });
 
 	m_audio_menu = new QMenu("Audio", m_main_menu);
 	const QAction *audio_alg1_action = m_audio_menu->addAction("Alg 1");
@@ -42,14 +44,17 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	connect(audio_alg1_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
+		m_interface_widget->m_is_audio = true;
 		setCentralWidget(m_interface_widget);
 	});
 	connect(audio_alg2_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
+		m_interface_widget->m_is_audio = true;
 		setCentralWidget(m_interface_widget);
 	});
 	connect(audio_alg3_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
+		m_interface_widget->m_is_audio = true;
 		setCentralWidget(m_interface_widget);
 	});
 
