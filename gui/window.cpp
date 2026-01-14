@@ -43,6 +43,8 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 	connect(audio_alg1_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
 		m_interface_widget->m_is_audio = true;
+		m_interface_widget->setEncodeFunction(ad::lsb_encode);
+		m_interface_widget->setDecodeFunction(ad::lsb_decode);
 		setCentralWidget(m_interface_widget);
 	});
 	// connect(audio_alg2_action, &QAction::triggered, this, [this]() -> void {
