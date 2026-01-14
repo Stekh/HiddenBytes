@@ -4,19 +4,19 @@
 
 #ifndef HIDDENBYTES_AUDIO_HELPERS_H
 #define HIDDENBYTES_AUDIO_HELPERS_H
-#include <cstdint>
-#include <vector>
-#include <string>
 #include <QString>
+#include <cstdint>
+#include <string>
+#include <vector>
 
-namespace ad{
-	struct Wav_File_Properties{
-		//riff
+namespace ad {
+	struct Wav_File_Properties {
+		// riff
 		char chunkID[4];
 		uint32_t chunk_size;
 		char format[4];
 
-		//ftm
+		// ftm
 		char sub_chunk1_ID[4];
 		uint32_t sub_chunk1_size;
 		uint16_t audio_format;
@@ -30,7 +30,7 @@ namespace ad{
 		uint32_t sub_chunk2_size;
 	};
 
-	struct Wav_File{
+	struct Wav_File {
 		Wav_File_Properties properties;
 		std::vector<int16_t> data;
 	};
@@ -39,7 +39,7 @@ namespace ad{
 	std::string str2bin(const QString &str);
 	QString bin2str(const std::string &bin_str);
 
-}
+} // namespace ad
 
 
 #endif // HIDDENBYTES_AUDIO_HELPERS_H

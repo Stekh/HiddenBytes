@@ -45,26 +45,23 @@ namespace ad {
 	}
 
 
-	QString lsb_decode(const QString& path){
+	QString lsb_decode(const QString &path) {
 		Wav_File file = read_wav_file(path.toStdString());
 		int null_cnt = 0;
 		std::string message;
 
 		for (size_t i = 0; i < file.data.size(); i++) {
-			if(null_cnt!=8){
+			if (null_cnt != 8) {
 				uint16_t bit = file.data[i] & 1;
-				if (bit == 0){
-					null_cnt ++;
-				}
-				else{
+				if (bit == 0) {
+					null_cnt++;
+				} else {
 					null_cnt = 0;
 				}
-				message+=std::to_string(bit);
-			}
-			else{
+				message += std::to_string(bit);
+			} else {
 				break;
 			}
-
 		}
 
 		return bin2str(message).removeLast();
