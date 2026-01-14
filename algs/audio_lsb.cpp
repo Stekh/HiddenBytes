@@ -2,9 +2,7 @@
 // Created by Lenovo on 03.12.2025.
 //
 
-#include "audio_lsb.h"
-#include <cstdint>
-#include <vector>
+
 #include <string>
 #include <QString>
 #include "audio_helpers.h"
@@ -42,6 +40,31 @@ namespace ad{
 			file_with_message.close();
 
 			return true;
+		}
+
+		QString lsb_decode(const QString& path){
+			Wav_File file = read_wav_file(path.toStdString());
+			int null_cnt = 0;
+			std::string message;
+
+			for (size_t i = 0; i < file.data.size(); i++) {
+				if(null_cnt!=8){
+					uint16_t bit = file.data[i] & 1;
+					if (bit == 0){
+						null_cnt ++;
+					}
+					else{
+						null_cnt = 0;
+					}
+						message+=std::to_string(bit);
+				}
+				else{
+					break;
+				}
+
+			}
+
+			return bin2str(message).removeLast();
 		}
 	}
 
