@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <QString>
 
 namespace ad{
 	struct Wav_File_Properties{
@@ -35,6 +36,8 @@ namespace ad{
 	};
 
 	Wav_File read_wav_file(std::string path);
+	std::string str2bin(const QString &str);
+	QString bin2str(const std::string &bin_str);
 
 }
 

@@ -4,5 +4,7 @@
 
 #ifndef HIDDENBYTES_AUDIO_LSB_H
 #define HIDDENBYTES_AUDIO_LSB_H
-namespace ad{}
+namespace ad{
+
+}
 #endif // HIDDENBYTES_AUDIO_LSB_H
