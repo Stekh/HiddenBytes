@@ -41,6 +41,27 @@ namespace gr {
 		return {true, bmp_header, dib_header, std::move(pixels)};
 	}
 
+	bool save_res_image(const QString& output_dir, ImageMeta img_meta) {
+		std::ofstream res_file (output_dir.toStdString() + "/res.bmp");
+		if (!res_file.is_open()) {
+			return false;
+		}
+
+		res_file.write(reinterpret_cast<char *>(&img_meta.bmp_header), sizeof(img_meta.bmp_header));
+		res_file.write(reinterpret_cast<char *>(&img_meta.dib_header), sizeof(img_meta.dib_header));
+		res_file.seekp(img_meta.bmp_header.dataOffset, std::ios::beg);
+
+		for (int32_t y = img_meta.dib_header.height - 1; y >= 0; y--) {
+			for (int32_t x = 0; x < img_meta.dib_header.width; x++) {
+				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]), sizeof(RGBPixel));
+			}
+		}
+
+		res_file.close();
+
+		return true;
+	}
+
 	QString bin2str(const std::string &bin_str) {
 		QString res;
 		for (size_t i = 0; i < bin_str.length(); i += 8) {

@@ -51,24 +51,10 @@ namespace gr {
 		}
 	finish_writing:
 
-		std::ofstream res_file (output_dir.toStdString() + "/res.bmp");
-		if (!res_file.is_open()) {
-			return false;
-		}
-
-		res_file.write(reinterpret_cast<char *>(&img_meta.bmp_header), sizeof(img_meta.bmp_header));
-		res_file.write(reinterpret_cast<char *>(&img_meta.dib_header), sizeof(img_meta.dib_header));
-		res_file.seekp(img_meta.bmp_header.dataOffset, std::ios::beg);
-
-		for (int32_t y = img_meta.dib_header.height - 1; y >= 0; y--) {
-			for (int32_t x = 0; x < img_meta.dib_header.width; x++) {
-				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]), sizeof(RGBPixel));
-			}
-		}
+		bool res = save_res_image(output_dir, std::move(img_meta));
 
 		file.close();
-		res_file.close();
-		return true;
+		return res;
 	}
 
 	QString lsb_decode(const QString& path) {
