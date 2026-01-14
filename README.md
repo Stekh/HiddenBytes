@@ -3,7 +3,7 @@ HiddenBytes is a simple GUI application made to showcase a few select steganogra
 Currently it only supports .bmp and .wav files for simplicity's sake.  
 
 ## Dependencies
-Currently, he only dependency is Qt6.  
+Currently, the only dependency is Qt6.  
 
 ## Installation
 For windows, you can get the newest version in the *Releases* tab.  
