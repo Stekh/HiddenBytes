@@ -21,6 +21,11 @@ set(SRC
         gui/interface_widget.cpp
         gui/interface_widget.h
 
+        algs/audio_lsb.cpp
+        algs/audio_lsb.h
+        algs/audio_helpers.cpp
+        algs/audio_helpers.h
+        
         algs/graphics_lsb.cpp
         algs/graphics_lsb.h
         algs/graphics_helpers.cpp
