@@ -35,7 +35,7 @@ namespace ad{
 		std::vector<int16_t> data;
 	};
 
-	Wav_File read_wav_file(std::string path);
+	Wav_File read_wav_file(const std::string &path);
 	std::string str2bin(const QString &str);
 	QString bin2str(const std::string &bin_str);
 
