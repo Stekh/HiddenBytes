@@ -5,6 +5,7 @@
 #include <QMenuBar>
 
 #include "../algs/audio_lsb.h"
+#include "../algs/graphics_lsb.h"
 #include "window.h"
 
 Window::Window(QWidget *parent) : QMainWindow(parent) {
@@ -20,6 +21,8 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	connect(graphics_LSB_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
+		m_interface_widget->setEncodeFunction(&gr::lsb_encode);
+		m_interface_widget->setDecodeFunction(&gr::lsb_decode);
 		m_interface_widget->m_is_audio = false;
 		setCentralWidget(m_interface_widget);
 	});
@@ -35,12 +38,12 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 	// });
 
 	m_audio_menu = new QMenu("Audio", m_main_menu);
-	const QAction *audio_alg1_action = m_audio_menu->addAction("LSB");
+	const QAction *audio_LSB_action = m_audio_menu->addAction("LSB");
 	// const QAction *audio_alg2_action = m_audio_menu->addAction("Alg 2");
 	// const QAction *audio_alg3_action = m_audio_menu->addAction("Alg 3");
 	m_main_menu->addMenu(m_audio_menu);
 
-	connect(audio_alg1_action, &QAction::triggered, this, [this]() -> void {
+	connect(audio_LSB_action, &QAction::triggered, this, [this]() -> void {
 		centralWidget()->setParent(nullptr);
 		m_interface_widget->m_is_audio = true;
 		m_interface_widget->setEncodeFunction(ad::lsb_encode);
@@ -66,9 +69,9 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	setCentralWidget(m_about_widget);
 	centralWidget()->setParent(nullptr);
-	m_interface_widget->setEncodeFunction(&ad::lsb_encode);
-	m_interface_widget->setDecodeFunction(&ad::lsb_decode);
-	m_interface_widget->m_is_audio = true;
+	m_interface_widget->setEncodeFunction(&gr::lsb_encode);
+	m_interface_widget->setDecodeFunction(&gr::lsb_decode);
+  m_interface_widget->m_is_audio = false;
 	setCentralWidget(m_interface_widget);
 	setMenuBar(m_main_menu);
 

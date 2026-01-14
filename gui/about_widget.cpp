@@ -24,7 +24,7 @@ AboutWidget::AboutWidget(QWidget *parent) :
 
 	QLabel *desc = new QLabel(this);
 	desc->setText(
-			"<p>HiddenBytes is a simple GUI application made to showcase a few select steganography algorithms. It is capable of both encoding and decoding hidden messages in both graphics and audio files. Further encryption of such messages is not supported hovewver - it's not strictly a part of steganography and was as such deemed out of scope for the project. You are however welcome to use any outside tools of your liking for such purposes.");
+			"<p>HiddenBytes is a simple GUI application made to showcase a few select steganography algorithms. It is capable of both encoding and decoding hidden messages in both graphics and audio files.");
 	desc->setAlignment(Qt::AlignCenter);
 	desc->setWordWrap(true);
 	desc->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
