@@ -10,7 +10,7 @@ namespace ad {
 
 		Wav_File_Properties file_properties{};
 		Wav_File full_file;
-		std::ifstream file(path);
+		std::ifstream file(path, std::ios::binary);
 		if (file.is_open()) {
 			file.read(reinterpret_cast<char *>(&file_properties), sizeof(Wav_File_Properties));
 
