@@ -2,19 +2,21 @@
 // Created by Lenovo on 03.12.2025.
 //
 
-#include "audio_lsb.h"
 #include <cstdint>
 #include <fstream>
 #include <string>
 #include <vector>
+
 #include "audio_helpers.h"
+#include "audio_lsb.h"
+#include "utils.h"
 
 
 namespace ad {
 
 	bool lsb_encode(const QString &path, const QString &message, const QString &output_dir) {
 		Wav_File file = read_wav_file(path.toStdString());
-		std::string bits = str2bin(message);
+		std::string bits = str2bin(message.toStdString());
 
 		if (bits.size() > file.data.size()) {
 			return false;

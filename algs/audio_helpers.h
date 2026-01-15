@@ -4,7 +4,7 @@
 
 #ifndef HIDDENBYTES_AUDIO_HELPERS_H
 #define HIDDENBYTES_AUDIO_HELPERS_H
-#include <QString>
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -36,9 +36,6 @@ namespace ad {
 	};
 
 	Wav_File read_wav_file(const std::string &path);
-	std::string str2bin(const QString &str);
-	QString bin2str(const std::string &bin_str);
-
 } // namespace ad
 
 

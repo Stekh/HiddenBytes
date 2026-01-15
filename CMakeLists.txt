@@ -25,13 +25,16 @@ set(SRC
         algs/audio_lsb.h
         algs/audio_helpers.cpp
         algs/audio_helpers.h
-        
+
         algs/graphics_lsb.cpp
         algs/graphics_lsb.h
         algs/graphics_helpers.cpp
-        algs/graphics_helpers.h)
+        algs/graphics_helpers.h
 
-include_directories(gui)
+        algs/utils.cpp
+        algs/utils.h)
+
+include_directories(gui, algs)
 
 add_executable(HiddenBytes ${SRC} main.cpp)
 

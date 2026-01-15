@@ -1,10 +1,9 @@
-#include "audio_helpers.h"
-#include <QByteArray>
-#include <QString>
 #include <bitset>
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include "audio_helpers.h"
 
 namespace ad {
 	Wav_File read_wav_file(const std::string &path) {
@@ -27,29 +26,5 @@ namespace ad {
 		file.close();
 
 		return full_file;
-	}
-
-
-	std::string str2bin(const QString &str) {
-		std::string bin_str;
-		QByteArray bytes = str.toUtf8();
-		for (char byte: bytes) {
-			bin_str += std::bitset<8>(static_cast<unsigned char>(byte)).to_string();
-		}
-		bin_str += "00000000";
-		return bin_str;
-	}
-
-
-	QString bin2str(const std::string &bin_str) {
-		QString res;
-		for (size_t i = 0; i < bin_str.length(); i += 8) {
-			uint8_t buf = 0;
-			for (int16_t b = 7; b >= 0; b--) {
-				buf += std::pow(2, 8 - (b + 1)) * (bin_str[static_cast<int16_t>(i) + b] - '0');
-			}
-			res += static_cast<char>(buf);
-		}
-		return res;
 	}
 } // namespace ad

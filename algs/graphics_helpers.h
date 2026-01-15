@@ -5,8 +5,8 @@
 #ifndef HIDDENBYTES_GRAPHICS_HELPERS_H
 #define HIDDENBYTES_GRAPHICS_HELPERS_H
 
+#include <QString>
 #include <cstdint>
-#include <fstream>
 #include <vector>
 
 namespace gr {
@@ -55,12 +55,7 @@ namespace gr {
 
 	ImageMeta verify_image(std::ifstream &file);
 
-	bool save_res_image(const QString& output_dir, ImageMeta img_meta);
-
-	QString bin2str(const std::string &bin_str);
-
-	std::string str2bin(const std::string &str);
-
+	bool save_res_image(const QString &output_dir, ImageMeta img_meta);
 } // namespace gr
 
 #endif // HIDDENBYTES_GRAPHICS_HELPERS_H

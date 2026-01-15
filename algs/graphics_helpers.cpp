@@ -3,8 +3,8 @@
 //
 
 #include <QString>
+#include <fstream>
 
-#include <bitset>
 #include "graphics_helpers.h"
 
 namespace gr {
@@ -41,8 +41,8 @@ namespace gr {
 		return {true, bmp_header, dib_header, std::move(pixels)};
 	}
 
-	bool save_res_image(const QString& output_dir, ImageMeta img_meta) {
-		std::ofstream res_file (output_dir.toStdString() + "/res.bmp");
+	bool save_res_image(const QString &output_dir, ImageMeta img_meta) {
+		std::ofstream res_file(output_dir.toStdString() + "/res.bmp");
 		if (!res_file.is_open()) {
 			return false;
 		}
@@ -53,36 +53,13 @@ namespace gr {
 
 		for (int32_t y = img_meta.dib_header.height - 1; y >= 0; y--) {
 			for (int32_t x = 0; x < img_meta.dib_header.width; x++) {
-				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]), sizeof(RGBPixel));
+				res_file.write(reinterpret_cast<char *>(&img_meta.pixels[y * img_meta.dib_header.width + x]),
+							   sizeof(RGBPixel));
 			}
 		}
 
 		res_file.close();
 
 		return true;
-	}
-
-	QString bin2str(const std::string &bin_str) {
-		QString res;
-		for (size_t i = 0; i < bin_str.length(); i += 8) {
-			uint8_t buf = 0;
-			for (int16_t b = 7; b >= 0; b--) {
-				buf += std::pow(2, 8 - (b + 1)) * (bin_str[static_cast<int16_t>(i) + b] - '0');
-			}
-			res += static_cast<char>(buf);
-		}
-
-		return res;
-	}
-
-	std::string str2bin(const std::string &str) {
-		std::string bin_str;
-		for (size_t i = 0; i < str.length(); i++) {
-			bin_str += std::bitset<8>(str[i]).to_string();
-		}
-		// add the null terminator
-		bin_str += "00000000";
-
-		return bin_str;
 	}
 } // namespace gr

@@ -2,12 +2,15 @@
 // Created by Stek-l on 28/11/2025.
 //
 
-#include "graphics_lsb.h"
+#include <fstream>
+
 #include "graphics_helpers.h"
+#include "graphics_lsb.h"
+#include "utils.h"
 
 namespace gr {
 
-	bool lsb_encode(const QString& path, const QString& message, const QString& output_dir) {
+	bool lsb_encode(const QString &path, const QString &message, const QString &output_dir) {
 		std::ifstream file(path.toStdString(), std::ios::binary);
 
 		ImageMeta img_meta = verify_image(file);
@@ -57,7 +60,7 @@ namespace gr {
 		return res;
 	}
 
-	QString lsb_decode(const QString& path) {
+	QString lsb_decode(const QString &path) {
 		std::ifstream file(path.toStdString(), std::ios::binary);
 
 		ImageMeta img_meta = verify_image(file);
