@@ -17,24 +17,47 @@ namespace gr {
 		DIBHeader dib_header;
 
 		// read the bmp header
-		file.read(reinterpret_cast<char *>(&bmp_header), sizeof(bmp_header));
+		// file.read(reinterpret_cast<char *>(&bmp_header), sizeof(bmp_header));
+		file.read(bmp_header.header, 2);
+		file.read(reinterpret_cast<char*>(&bmp_header.fileSize), 4);
+		file.read(reinterpret_cast<char*>(&bmp_header.reserved), 4);
+		file.read(reinterpret_cast<char*>(&bmp_header.dataOffset), 4);
 		if (bmp_header.header[0] != 'B' || bmp_header.header[1] != 'M') {
 			return {false, {}, {}, std::vector<RGBPixel>{}};
 		}
 
 		// read the dib header
-		file.read(reinterpret_cast<char *>(&dib_header), sizeof(dib_header));
+		// file.read(reinterpret_cast<char *>(&dib_header), sizeof(dib_header));
+		file.read(reinterpret_cast<char*>(&dib_header.headerSize), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.width), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.height), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.colorPlanes), 2);
+		file.read(reinterpret_cast<char*>(&dib_header.bitsPerPixel), 2);
+		file.read(reinterpret_cast<char*>(&dib_header.compression), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.imageSize), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.xRes), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.yRes), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.colors), 4);
+		file.read(reinterpret_cast<char*>(&dib_header.importantColors), 4);
 		if (dib_header.bitsPerPixel != 24) {
 			return {false, {}, {}, std::vector<RGBPixel>{}};
 		}
 
 		file.seekg(bmp_header.dataOffset, std::ios::beg);
 
-		std::vector<RGBPixel> pixels(dib_header.width * dib_header.height);
+		const int32_t width = dib_header.width;
+		const int32_t height = std::abs(dib_header.height);
 
-		for (int32_t y = dib_header.height - 1; y >= 0; y--) {
-			for (int32_t x = 0; x < dib_header.width; x++) {
-				file.read(reinterpret_cast<char *>(&pixels[y * dib_header.width + x]), sizeof(RGBPixel));
+		const size_t rowSize = ((width * 3 + 3) / 4) * 4;
+		std::vector<uint8_t> row(rowSize);
+
+		std::vector<RGBPixel> pixels(width * height);
+
+		for (int32_t y = height - 1; y >= 0; y--) {
+			file.read(reinterpret_cast<char *>(row.data()), rowSize);
+
+			for (int32_t x = 0; x < width; x++) {
+				std::memcpy(&pixels[y * width + x], row.data() + x * 3, 3);
 			}
 		}
 
