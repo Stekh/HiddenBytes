@@ -34,7 +34,7 @@ namespace ad {
 			file.data[i] = sample;
 		}
 
-		std::ofstream file_with_message(output_dir.toStdString() + "/res.wav");
+		std::ofstream file_with_message(output_dir.toStdString() + "/res.wav", std::ios::binary);
 		if (!file_with_message.is_open())
 			return false;
 

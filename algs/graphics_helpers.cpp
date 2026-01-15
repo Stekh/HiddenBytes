@@ -42,7 +42,7 @@ namespace gr {
 	}
 
 	bool save_res_image(const QString &output_dir, ImageMeta img_meta) {
-		std::ofstream res_file(output_dir.toStdString() + "/res.bmp");
+		std::ofstream res_file(output_dir.toStdString() + "/res.bmp", std::ios::binary);
 		if (!res_file.is_open()) {
 			return false;
 		}
