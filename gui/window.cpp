@@ -15,8 +15,6 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 
 	m_graphics_menu = new QMenu("Graphics", m_main_menu);
 	const QAction *graphics_LSB_action = m_graphics_menu->addAction("LSB");
-	// const QAction *graphics_alg2_action = m_graphics_menu->addAction("Alg 2");
-	// const QAction *graphics_alg3_action = m_graphics_menu->addAction("Alg 3");
 	m_main_menu->addMenu(m_graphics_menu);
 
 	connect(graphics_LSB_action, &QAction::triggered, this, [this]() -> void {
@@ -26,21 +24,9 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 		m_interface_widget->m_is_audio = false;
 		setCentralWidget(m_interface_widget);
 	});
-	// connect(graphics_alg2_action, &QAction::triggered, this, [this]() -> void {
-	// 	centralWidget()->setParent(nullptr);
-	// 	m_interface_widget->m_is_audio = false;
-	//  	setCentralWidget(m_interface_widget);
-	// });
-	// connect(graphics_alg3_action, &QAction::triggered, this, [this]() -> void {
-	// 	centralWidget()->setParent(nullptr);
-	// 	m_interface_widget->m_is_audio = false;
-	// 	setCentralWidget(m_interface_widget);
-	// });
 
 	m_audio_menu = new QMenu("Audio", m_main_menu);
 	const QAction *audio_LSB_action = m_audio_menu->addAction("LSB");
-	// const QAction *audio_alg2_action = m_audio_menu->addAction("Alg 2");
-	// const QAction *audio_alg3_action = m_audio_menu->addAction("Alg 3");
 	m_main_menu->addMenu(m_audio_menu);
 
 	connect(audio_LSB_action, &QAction::triggered, this, [this]() -> void {
@@ -50,16 +36,6 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 		m_interface_widget->setDecodeFunction(ad::lsb_decode);
 		setCentralWidget(m_interface_widget);
 	});
-	// connect(audio_alg2_action, &QAction::triggered, this, [this]() -> void {
-	// 	centralWidget()->setParent(nullptr);
-	// 	m_interface_widget->m_is_audio = true;
-	// 	setCentralWidget(m_interface_widget);
-	// });
-	// connect(audio_alg3_action, &QAction::triggered, this, [this]() -> void {
-	// 	centralWidget()->setParent(nullptr);
-	// 	m_interface_widget->m_is_audio = true;
-	// 	setCentralWidget(m_interface_widget);
-	// });
 
 	const QAction *about_action = m_main_menu->addAction("About");
 	connect(about_action, &QAction::triggered, this, [this]() -> void {
@@ -67,12 +43,13 @@ Window::Window(QWidget *parent) : QMainWindow(parent) {
 		setCentralWidget(m_about_widget);
 	});
 
-	setCentralWidget(m_about_widget);
-	centralWidget()->setParent(nullptr);
+	setCentralWidget(m_interface_widget);
 	m_interface_widget->setEncodeFunction(&gr::lsb_encode);
 	m_interface_widget->setDecodeFunction(&gr::lsb_decode);
-  m_interface_widget->m_is_audio = false;
-	setCentralWidget(m_interface_widget);
+	m_interface_widget->m_is_audio = false;
+	centralWidget()->setParent(nullptr);
+	setCentralWidget(m_about_widget);
+
 	setMenuBar(m_main_menu);
 
 	show();
